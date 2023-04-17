@@ -1,6 +1,2 @@
-# ToDo:
-	Untorrent programms
-	Add WinActivator method
-	Add subscribing method
-	Add admin panel
+Короче много чего не доделано, куча добавлять, думаю когда то руки дойдут
 
