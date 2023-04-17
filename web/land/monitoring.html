@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Мониторинг системы</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Мониторинг системы</h1>
+        <div class="row">
+            <div class="col-sm-6">
+                <h2>Процессор</h2>
+                <p id="cpu_percent">Загрузка процессора: <span></span>%</p>
+            </div>
+            <div class="col-sm-6">
+                <h2>Память</h2>
+                <p id="memory_info">Использовано памяти: <span></span> МБ</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function update_data() {
+            eel.get_cpu_percent()(function(result) {
+                document.getElementById('cpu_percent').children[0].innerHTML = result;
+            });
+            eel.get_memory_info()(function(result) {
+                var used_memory = (result.total - result.available) / 1024 / 1024;
+                document.getElementById('memory_info').children[0].innerHTML = used_memory.toFixed(2);
+            });
+        }
+
+        setInterval(function() {
+            update_data();
+        }, 1000);
+    </script>
+
+    <script src="eel.js"></script>
+    <script>
+        eel.expose(get_cpu_percent);
+        eel.expose(get_memory_info);
+    </script>
+</body>
+</html>
